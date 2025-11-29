@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
-const INACTIVITY_LIMIT = 2 * 60 * 1000; // 2 minutos en milisegundos
+const INACTIVITY_LIMIT = 2 * 60 * 1000; // 2 minutos
 
 export default function SessionManager() {
   const router = useRouter();
@@ -11,8 +11,8 @@ export default function SessionManager() {
 
   const logout = async () => {
     try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      // Redirigir al login
+      // CAMBIO: Ahora llamamos a 'signout' en vez de 'logout'
+      await fetch('/api/auth/signout', { method: 'POST' });
       router.push('/admin/login');
       router.refresh();
     } catch (error) {
@@ -23,7 +23,6 @@ export default function SessionManager() {
   const resetTimer = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     
-    // Configurar el timer para ejecutar logout después del límite
     timerRef.current = setTimeout(() => {
       alert('Sesión cerrada por inactividad 🔒');
       logout();
@@ -31,20 +30,15 @@ export default function SessionManager() {
   };
 
   useEffect(() => {
-    // Eventos que consideramos "actividad"
     const events = ['mousedown', 'keydown', 'scroll', 'mousemove', 'touchstart'];
-
-    // Iniciar el timer la primera vez
     resetTimer();
 
-    // Escuchar eventos
     const handleActivity = () => resetTimer();
 
     events.forEach((event) => {
       window.addEventListener(event, handleActivity);
     });
 
-    // Limpieza al salir
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
       events.forEach((event) => {
@@ -53,5 +47,5 @@ export default function SessionManager() {
     };
   }, []);
 
-  return null; // Este componente no renderiza nada visual
+  return null;
 }
