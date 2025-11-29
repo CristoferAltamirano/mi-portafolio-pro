@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+@theme {
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+
+  @keyframes fade-in-up {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+}
+
+/* === TEMA DARK ONLY === */
+
+:root {
+  /* Forzamos los colores oscuros como predeterminados */
+  --background: #020617; /* El azul oscuro elegante (Slate 950) */
+  --foreground: #f8fafc; /* Texto claro */
+}
+
+/* Ya no necesitamos la clase .dark separada porque el :root ya es oscuro */
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  /* Sin transición porque ya no cambiaremos de color */
+}
+
+/* Scrollbar Oscuro */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #1e293b;
+  border-radius: 9999px;
+  border: 2px solid #020617;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #334155;
+}
