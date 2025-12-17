@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X, Code } from 'lucide-react';
-// Ya no importamos DarkModeToggle
+import { Menu, X } from 'lucide-react';
+// CORRECCIÓN: Usamos '@' para ir a la raíz de components sin importar dónde estemos
+import Logo from '@/components/Logo'; 
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,17 +13,21 @@ export const Header = () => {
     <header className="sticky top-0 z-50 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="text-lg sm:text-xl font-bold text-indigo-400 flex items-center gap-2">
-            <Code className="w-6 h-6" /> 
-            <span>Portafolio Cristofer Altamirano</span>
+          
+          {/* Logo y Nombre */}
+          <Link href="/" className="flex items-center gap-3 group">
+            {/* Ajustamos el tamaño del logo */}
+            <Logo className="h-10 w-auto" /> 
+            
+            <span className="text-lg sm:text-xl font-bold text-indigo-400 group-hover:text-indigo-300 transition-colors">
+              Cristofer Altamirano
+            </span>
           </Link>
 
           {/* Menú Desktop */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-gray-300 hover:text-indigo-400 transition font-medium">Inicio</Link>
             <Link href="/projects" className="text-gray-300 hover:text-indigo-400 transition font-medium">Proyectos</Link>
-            
-            {/* Eliminamos el div del DarkModeToggle */}
           </nav>
 
           {/* Botón Móvil */}
